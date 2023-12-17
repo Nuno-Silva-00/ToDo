@@ -7,7 +7,6 @@
             <span>|</span>
             <a routerLink="/notes">Notes</a>
         </nav>
-        <a routerLink="/auth" *ngIf="!isAuthenticated">Login</a>
         <a *ngIf="isAuthenticated" (click)="onLogout()">Logout</a>
     </div>
 </header>

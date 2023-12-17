@@ -67,7 +67,7 @@ export class AuthService {
       _tokenExpirationDate: number
     } = JSON.parse(localStorage.getItem('userData') || "{}");
 
-    if (!userData) {
+    if (localStorage.getItem('userData') == null) {
       return;
     }
 
@@ -100,6 +100,7 @@ export class AuthService {
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error ocurred';
+
     if (!errorRes.error || !errorRes.error.message) {
       return throwError(() => errorMessage);
     }
