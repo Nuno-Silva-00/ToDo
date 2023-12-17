@@ -1,0 +1,23 @@
+<form [formGroup]="shoppingListForm" #formDirective="ngForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" [hideRequiredMarker]="true">
+            <mat-label>Item</mat-label>
+            <input type="text" formControlName="item" class="form-input-field" matInput required>
+        </mat-form-field>
+
+        <mat-form-field subscriptSizing="dynamic" appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input type="number" formControlName="amount" class="form-input-field" matInput>
+        </mat-form-field>
+
+        <div class="submitButtons">
+            <button matSuffix mat-button [hidden]="editMode ? false : true" type="button"
+                (click)="resetForm()">Clear</button>
+            <button matSuffix mat-button [disabled]="!shoppingListForm.valid" type="submit">
+                {{editMode ? 'Edit' : 'Add'}}
+            </button>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,28 @@
+header {
+    background-color: white;
+    padding: 0;
+    border-bottom: 1px solid #e72929;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+a {
+    color: #af1313;
+    padding: 0 2rem;
+    cursor: pointer;
+}
+
+a:hover {
+    background-color: #e72929;
+    color: white;
+    opacity: .9;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+span {
+    color: #af1313;
+}

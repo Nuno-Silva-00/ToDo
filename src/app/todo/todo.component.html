@@ -1,0 +1,12 @@
+<div class="container">
+    <app-todo-edit (blockDelete)="onBlockDelete($event)"></app-todo-edit>
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <mat-card class="example-box" *ngFor="let toDo of toDos; let i = index" cdkDragLockAxis="y" cdkDrag>
+            <mat-card-title>{{toDo.toDo}}</mat-card-title>
+            <div>
+                <button mat-button (click)="onEditToDo(toDo.id)">Edit</button>
+                <button mat-button [disabled]="editMode ? true :false" (click)="deleteToDo(toDo.id)">Delete</button>
+            </div>
+        </mat-card>
+    </div>
+</div>

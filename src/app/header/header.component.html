@@ -1,0 +1,13 @@
+<header>
+    <div class="container">
+        <nav>
+            <a routerLink="/">To Do</a>
+            <span>|</span>
+            <a routerLink="/shopping-list">Shopping List</a>
+            <span>|</span>
+            <a routerLink="/notes">Notes</a>
+        </nav>
+        <a routerLink="/auth" *ngIf="!isAuthenticated">Login</a>
+        <a *ngIf="isAuthenticated" (click)="onLogout()">Logout</a>
+    </div>
+</header>

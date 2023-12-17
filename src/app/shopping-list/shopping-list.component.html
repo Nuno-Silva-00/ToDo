@@ -1,0 +1,11 @@
+<div class="container">
+    <app-shopping-list-edit (blockDelete)="onBlockDelete($event)"></app-shopping-list-edit>
+    <mat-card *ngFor="let item of shoppingList; let i = index">
+        <mat-card-title *ngIf="item.amount">{{item.item}} {{item.amount}}</mat-card-title>
+        <mat-card-title *ngIf="!item.amount">{{item.item}}</mat-card-title>
+        <div>
+            <button mat-button (click)="onEditToDo(item.id)">Edit</button>
+            <button mat-button [disabled]="editMode ? true :false" (click)="deleteToDo(item.id)">Delete</button>
+        </div>
+    </mat-card>
+</div>
