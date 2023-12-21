@@ -6,6 +6,7 @@ import TODO from "../mongo/models/todo.js";
 const createToDo = async (req, res) => {
     const { todo } = req.body;
     const userId = req.userId;
+    const lastModifiedAt = new Date();
 
     try {
         const user = await USER.findById(userId);

@@ -4,6 +4,7 @@ import SHOPPING from "../mongo/models/shopping.js";
 const createItem = async (req, res) => {
     const { item, amount } = req.body;
     const userId = req.userId;
+    const lastModifiedAt = new Date();
 
     try {
         const user = await USER.findById(userId);
