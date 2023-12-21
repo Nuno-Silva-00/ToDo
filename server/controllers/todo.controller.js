@@ -92,6 +92,7 @@ const deleteToDo = async (req, res) => {
 const updateOrder = async (req, res) => {
     const userId = req.userId;
     const { newOrder } = req.body;
+    const lastModifiedAt = new Date();
 
     let updatedIds = []
 
