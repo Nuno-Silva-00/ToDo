@@ -12,11 +12,12 @@ const createItem = async (req, res) => {
         const newItem = await SHOPPING.create({
             item,
             amount,
+            creator: userId,
             createdAt: new Date().toISOString(),
-            creator: userId
+            lastModifiedAt: new Date().toISOString()
         });
 
-        await USER.findOneAndUpdate({ _id: userId }, { $push: { allItems: newItem._id } })
+        await USER.findOneAndUpdate({ _id: userId }, { $push: { allItems: newItem._id }, lastModifiedAt })
         res.status(200).json({ id: newItem.id, item: newItem.item, amount: newItem.amount });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -41,9 +42,10 @@ const getItems = async (req, res) => {
 const updateItem = async (req, res) => {
     const userId = req.userId;
     const { id, item, amount } = req.body;
+    const lastModifiedAt = new Date();
 
     try {
-        await SHOPPING.findOneAndUpdate({ '_id': id, creator: userId }, { item, amount });
+        await SHOPPING.findOneAndUpdate({ '_id': id, creator: userId }, { item, amount, lastModifiedAt });
         res.status(200).json({ message: 'Shopping list item Updated!' });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -53,11 +55,14 @@ const updateItem = async (req, res) => {
 const deleteItem = async (req, res) => {
     const idToDelete = req.params.id;
     const userId = req.userId;
+    const lastModifiedAt = new Date();
+
 
     try {
         await SHOPPING.deleteOne({ 'creator': userId, '_id': idToDelete });
         await USER.findByIdAndUpdate(userId, {
-            $pull: { allItems: idToDelete }
+            $pull: { allItems: idToDelete },
+            lastModifiedAt
         })
         res.status(200).json({ message: 'Shopping list item Deleted!' });
     } catch (error) {

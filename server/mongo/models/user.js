@@ -6,7 +6,8 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     allToDos: [{ type: mongoose.Schema.Types.ObjectId, ref: "ToDo" }],
     allItems: [{ type: mongoose.Schema.Types.ObjectId, ref: "Shopping" }],
-    // allNotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Notes" }]
+    allNotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Notes" }],
+    lastModifiedAt: { type: Date, default: new Date() },
 });
 
 const USER = mongoose.model("User", UserSchema);

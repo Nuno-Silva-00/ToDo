@@ -7,6 +7,7 @@ import connection from './mongo/connection.js'
 import userRouter from './routes/user.routes.js';
 import todoRouter from './routes/todo.routes.js';
 import shoppingRouter from './routes/shopping.routes.js';
+import notesRouter from './routes/notes.routes.js';
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRouter);
 app.use('/api/todo', todoRouter);
 app.use('/api/shopping', shoppingRouter);
-// app.use('/api/notes', todoRouter);
+app.use('/api/note', notesRouter);
 
 
 const startServer = async () => {

@@ -13,11 +13,12 @@ const createToDo = async (req, res) => {
 
         const newToDo = await TODO.create({
             todo,
+            creator: userId,
             createdAt: new Date().toISOString(),
-            creator: userId
+            lastModifiedAt: new Date().toISOString()
         });
 
-        await USER.findOneAndUpdate({ _id: userId }, { $push: { allToDos: newToDo._id } })
+        await USER.findOneAndUpdate({ _id: userId }, { $push: { allToDos: newToDo._id }, lastModifiedAt })
         res.status(200).json({ id: newToDo.id, toDo: newToDo.todo });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -60,9 +61,10 @@ const getToDo = async (req, res) => {
 const updateToDo = async (req, res) => {
     const userId = req.userId;
     const { id, toDo } = req.body;
+    const lastModifiedAt = new Date();
 
     try {
-        await TODO.findOneAndUpdate({ '_id': id, creator: userId }, { todo: toDo });
+        await TODO.findOneAndUpdate({ '_id': id, creator: userId }, { todo: toDo, lastModifiedAt });
         res.status(200).json({ message: 'ToDo Updated' });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -72,11 +74,13 @@ const updateToDo = async (req, res) => {
 const deleteToDo = async (req, res) => {
     const idToDelete = req.params.id;
     const userId = req.userId;
+    const lastModifiedAt = new Date();
 
     try {
         await TODO.deleteOne({ 'creator': userId, '_id': idToDelete });
         await USER.findByIdAndUpdate(userId, {
-            $pull: { allToDos: idToDelete }
+            $pull: { allToDos: idToDelete },
+            lastModifiedAt
         })
         res.status(200).json({ message: 'ToDo Deleted' });
     } catch (error) {
@@ -97,7 +101,8 @@ const updateOrder = async (req, res) => {
     try {
         await USER.findByIdAndUpdate(userId,
             {
-                allToDos: updatedIds
+                allToDos: updatedIds,
+                lastModifiedAt
             });
         res.status(200).json({ message: 'Order Updated' });
     } catch (error) {
