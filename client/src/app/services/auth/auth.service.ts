@@ -37,6 +37,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
+        
     return this.http.post<AuthResponseData>(
       this.path + '/login',
       {
@@ -89,8 +90,6 @@ export class AuthService {
   }
 
   private handleAuthentication(accessToken: string, expiresIn: number) {
-    console.log('handle auth');
-
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(accessToken, expirationDate);
 
