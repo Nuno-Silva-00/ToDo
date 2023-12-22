@@ -88,8 +88,9 @@ export class AuthService {
     }, expirationDuration);
   }
 
-
   private handleAuthentication(accessToken: string, expiresIn: number) {
+    console.log('handle auth');
+
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(accessToken, expirationDate);
 

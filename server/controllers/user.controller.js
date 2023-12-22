@@ -28,6 +28,7 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
+        console.log('login');
         const { email, password } = req.body;
         const userExists = await USER.findOne({ email });
 
