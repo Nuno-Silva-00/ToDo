@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthResponseData, AuthService } from './services/auth/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.autoLogin();    
+    this.autoLogin();
+    console.log(environment.production); 
   }
 
   private autoLogin() {
