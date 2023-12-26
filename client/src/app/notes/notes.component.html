@@ -1,1 +1,12 @@
-<p>notes works!!</p>
+<div class="container">
+    <app-notes-edit (blockDelete)="onBlockDelete($event)"></app-notes-edit>
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <mat-card class="example-box" *ngFor="let note of notes; let i = index" cdkDragLockAxis="y" cdkDrag>
+            <mat-card-title>{{note.note}}</mat-card-title>
+            <div>
+                <button mat-button (click)="onEditNote(note.id)">Edit</button>
+                <button mat-button [disabled]="editMode ? true :false" (click)="deleteNote(note.id)">Delete</button>
+            </div>
+        </mat-card>
+    </div>
+</div>

@@ -24,6 +24,8 @@ import { LoadingSpinerComponent } from './shared/loading-spinner/loading-spinner
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
 import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/shopping-list-edit.component';
 import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.component';
+import { NoteEditComponent } from './notes/notes-edit/notes-edit.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,8 @@ import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.comp
     AuthPageComponent,
     LoadingSpinerComponent,
     ShoppingListEditComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    NoteEditComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, tap } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
 import { ShoppingListItem } from 'src/app/shared/models/ShoppingListItem';
 import { AuthService } from '../auth/auth.service';
 
@@ -13,7 +12,7 @@ export class ShoppingListService {
 
   shoppingListChanged = new Subject<ShoppingListItem[]>();
   startedEditing = new Subject<number>();
-  path = environment.API + '/api/shopping';
+  path = process.env['API_URL'] + '/api/shopping';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
