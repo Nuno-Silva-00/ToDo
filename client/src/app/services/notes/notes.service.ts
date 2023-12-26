@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Subject, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
+import { environment } from 'src/environments/environment';
 import { Note } from 'src/app/shared/models/Note';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class NoteService {
 
   notesChanged = new Subject<Note[]>();
   startedEditing = new Subject<number>();
-  path = process.env['API_URL'] + '/api/note';
+  path = environment.API + '/api/note';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

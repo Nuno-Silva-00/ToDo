@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Subject, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
+import { environment } from 'src/environments/environment';
 import { ToDo } from 'src/app/shared/models/ToDo';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class ToDoService {
 
   toDoChanged = new Subject<ToDo[]>();
   startedEditing = new Subject<number>();
-  path = process.env['API_URL'] + '/api/todo';
+  path = environment.API + '/api/todo';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
