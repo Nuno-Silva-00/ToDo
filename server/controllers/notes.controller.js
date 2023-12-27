@@ -26,14 +26,32 @@ const createNote = async (req, res) => {
 
 const getNotes = async (req, res) => {
     const userId = req.userId;
-    const noteList = [];
+    let noteList = [];
+    let orderList = [];
+    let finalList = [];
 
     try {
         const list = await NOTE.find({ 'creator': userId });
+
+        const user = await USER.findById(userId);
+
         list.forEach(note => {
             noteList.push({ id: note._id, note: note.note });
         });
-        res.status(200).json(noteList);
+
+        user.allNotes.forEach(id => {
+            orderList.push(id);
+        });
+
+        orderList.forEach(id => {
+            noteList.forEach(note => {
+                if (id == note.id.toHexString()) {
+                    finalList.push(note);
+                }
+            });
+        });
+
+        res.status(200).json(finalList);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
