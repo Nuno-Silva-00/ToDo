@@ -1,1 +1,13 @@
-<p>notes works!!</p>
+<app-notes-edit (blockDelete)="onBlockDelete($event)"></app-notes-edit>
+<div class="container">
+    <mat-card class="block" *ngFor="let note of notes; let i = index">
+        <mat-card-content>
+            <span>{{note.note}}</span>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button (click)="onViewNote(note.id, i)">View</button>
+            <button mat-button (click)="onEditNote(note.id)">Edit</button>
+            <button mat-button [disabled]="editMode ? true : false" (click)="deleteNote(note.id)">Delete</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,11 @@
+<mat-dialog-content class="mat-typography">
+    <p>View Note</p>
+</mat-dialog-content>
+
+<textarea rows="20" cols="100" type="text" id="note" name='note' matInput [(ngModel)]="data">{{data}}
+</textarea>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onNoClick()">Clear</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Edit</button>
+</mat-dialog-actions>

@@ -30,7 +30,7 @@ const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
         const userExists = await USER.findOne({ email });
-
+        
         if (!userExists) return res.status(400).json({ message: 'EMAIL_NOT_FOUND' });
 
         const passwordMatch = await bcrypt.compare(password, userExists.password);

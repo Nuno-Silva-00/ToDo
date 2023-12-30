@@ -1,4 +1,4 @@
 export const environment = {
-    production: false,
+    production: true,
     API: 'https://todoapp-0ekh.onrender.com'
-}
+};
