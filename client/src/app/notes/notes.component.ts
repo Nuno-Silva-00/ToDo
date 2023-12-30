@@ -3,8 +3,9 @@ import { Note } from '../shared/models/Note';
 import { Subscription } from 'rxjs';
 import { NoteService } from '../services/notes/notes.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 import { DeleteDialogComponent } from '../shared/delete-dialog/delete-dialog.component';
+import { NoteViewDialog } from '../shared/note-view-dialog/note-view-dialog.component';
 
 @Component({
   selector: 'app-notes',
@@ -17,8 +18,7 @@ export class NotesComponent {
 
   editMode = false;
 
-  constructor(private noteService: NoteService, private deleteMessage: MatDialog) { }
-
+  constructor(private noteService: NoteService, private deleteMessage: MatDialog, private noteViewDialog: MatDialog) { }
 
   ngOnInit() {
     this.subscription = this.noteService.getAll()
@@ -30,12 +30,6 @@ export class NotesComponent {
       this.noteService.notesChanged.subscribe((notes: Note[]) => {
         this.notes = notes;
       }));
-
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.notes, event.previousIndex, event.currentIndex);
-    this.noteService.changeOrder(this.notes);
   }
 
   deleteNote(id: number): void {
@@ -50,6 +44,20 @@ export class NotesComponent {
     this.noteService.startedEditing.next(id);
   }
 
+  onViewNote(id: number, index: number): void {
+    this.editMode = true;
+
+    const dialogRef = this.noteViewDialog.open(NoteViewDialog,
+      {
+        data: this.notes[index].note,
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      result && this.noteService.updateNote(id, result);
+      this.editMode = false;
+    });
+  }
+
   onBlockDelete(block: boolean) {
     this.editMode = block;
   }
@@ -57,5 +65,4 @@ export class NotesComponent {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
 }

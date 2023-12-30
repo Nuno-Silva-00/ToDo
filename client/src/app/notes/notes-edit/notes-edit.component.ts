@@ -24,9 +24,9 @@ export class NoteEditComponent {
     const value = form.value;
 
     if (this.editMode) {
-      this.noteService.updateNote(this.editItemId, value.toDo);
+      this.noteService.updateNote(this.editItemId, value.note);
     } else {
-      this.noteService.addNote(value.toDo);
+      this.noteService.addNote(value.note);
     }
 
     this.resetForm();
