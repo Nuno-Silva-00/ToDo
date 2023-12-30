@@ -15,22 +15,25 @@ export class AppComponent {
 
   ngOnInit() {
     this.autoLogin();
-    console.log(environment.production); 
   }
 
   private autoLogin() {
-    let authObs: Observable<AuthResponseData>;
+    if (environment.production) {
+      this.authService.autoLogin();
+    } else {
 
-    authObs = this.authService.login("teste@teste.com", "teste@teste.com");
+      let authObs: Observable<AuthResponseData>;
 
-    authObs.subscribe({
-      next: (v) => {
-        this.router.navigate(['/']);
-      },
-      error: (errorMessage) => {
-        console.log(errorMessage);
-      }
-    });
+      authObs = this.authService.login("teste@teste.com", "teste@teste.com");
+
+      authObs.subscribe({
+        next: (v) => {
+          this.router.navigate(['/']);
+        },
+        error: (errorMessage) => {
+          console.log(errorMessage);
+        }
+      });
+    }
   }
-
 }
