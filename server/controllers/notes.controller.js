@@ -87,29 +87,4 @@ const deleteNote = async (req, res) => {
     }
 }
 
-
-const updateOrder = async (req, res) => {
-    const userId = req.userId;
-    const { newOrder } = req.body;
-    const lastModifiedAt = new Date();
-
-    let updatedIds = []
-
-    newOrder.map((item) =>
-        updatedIds.push(item.id)
-    );
-
-    try {
-        await USER.findByIdAndUpdate(userId,
-            {
-                allNotes: updatedIds,
-                lastModifiedAt
-            });
-        res.status(200).json({ message: 'Order Updated' });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: error.message });
-    }
-}
-
-export { createNote, getNotes, updateNote, updateOrder, deleteNote };
+export { createNote, getNotes, updateNote, deleteNote };
