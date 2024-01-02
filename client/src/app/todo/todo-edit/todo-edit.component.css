@@ -1,3 +1,4 @@
 mat-form-field {
     background-color: white;
+    display: flex;
 }
