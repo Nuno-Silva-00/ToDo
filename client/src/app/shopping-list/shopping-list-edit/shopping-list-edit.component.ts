@@ -17,8 +17,8 @@ export class ShoppingListEditComponent {
   editedItem!: ShoppingListItem;
 
   shoppingListForm = new FormGroup({
-    item: new FormControl('', Validators.required),
-    amount: new FormControl('')
+    item: new FormControl(),
+    amount: new FormControl()
   });
 
   constructor(private shoppingListService: ShoppingListService) { }

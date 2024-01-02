@@ -1,11 +1,11 @@
 <!-- still need to double check the form validation -->
 <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form-group" [hideRequiredMarker]="true">
+    <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form-group">
         <mat-label>Add To Do</mat-label>
-        <input type="text" id="toDo" name='toDo' matInput class="form-control" ngModel required>
+        <input type="text" id="toDo" name='toDo' matInput class="form-control" ngModel>
         <button matSuffix mat-button [hidden]="editMode ? false : true" type="button"
             (click)="resetForm()">Clear</button>
-        <button matSuffix mat-button [disabled]="!f.valid" type="submit">
+        <button matSuffix mat-button [disabled]="!f.value.toDo" type="submit">
             {{editMode ? 'Edit' : 'Add'}}
         </button>
     </mat-form-field>

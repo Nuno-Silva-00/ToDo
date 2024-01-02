@@ -1,9 +1,9 @@
 <form [formGroup]="shoppingListForm" #formDirective="ngForm" (ngSubmit)="onSubmit()">
     <div class="container">
 
-        <mat-form-field subscriptSizing="dynamic" appearance="outline" [hideRequiredMarker]="true">
+        <mat-form-field subscriptSizing="dynamic" appearance="outline">
             <mat-label>Item</mat-label>
-            <input type="text" formControlName="item" class="form-input-field" matInput required>
+            <input type="text" formControlName="item" class="form-input-field" matInput>
         </mat-form-field>
 
         <mat-form-field subscriptSizing="dynamic" appearance="outline">
@@ -14,7 +14,8 @@
         <div class="submitButtons">
             <button matSuffix mat-button [hidden]="editMode ? false : true" type="button"
                 (click)="resetForm()">Clear</button>
-            <button matSuffix mat-button [disabled]="!shoppingListForm.valid" type="submit">
+
+            <button matSuffix mat-button [disabled]="!shoppingListForm.get('item')!.value" type="submit">
                 {{editMode ? 'Edit' : 'Add'}}
             </button>
         </div>
