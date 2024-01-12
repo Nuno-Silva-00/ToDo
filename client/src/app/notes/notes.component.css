@@ -1,36 +1,27 @@
 .container {
     margin: auto;
     width: 80%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.block {
     margin-top: 2em;
-    width: 18%;
-    box-sizing: border-box;
 }
 
-.block span {
+.card {
+    width: 80%;
+    box-sizing: content-box;
+}
+
+.card span {
     display: block;
-    overflow: auto;
+    overflow: scroll;
     white-space: pre-wrap;
 
-    min-height: 5em;
-    max-height: 5em;
-    
+    min-height: 10em;
+    max-height: 10em;
+
     line-height: 1.3em;
 }
 
 mat-card-actions {
     display: flex;
-    justify-content: center;
-}
-
-@media (max-width: 480px) {
-    .block {
-        width: 100%;
-
-    }
+    justify-content: space-around;
+    align-items: center;
 }
