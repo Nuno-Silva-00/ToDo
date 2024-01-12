@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import {MatGridListModule} from '@angular/material/grid-list'; 
 
 import { AppComponent } from './app.component';
 import { ToDoComponent } from './todo/todo.component';
@@ -56,7 +57,8 @@ import { NoteViewDialog } from './shared/note-view-dialog/note-view-dialog.compo
     MatSnackBarModule,
     ReactiveFormsModule,
     DragDropModule,
-    MatDialogModule
+    MatDialogModule,
+    MatGridListModule
 
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],

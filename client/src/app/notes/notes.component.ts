@@ -3,6 +3,7 @@ import { Note } from '../shared/models/Note';
 import { Subscription } from 'rxjs';
 import { NoteService } from '../services/notes/notes.service';
 import { MatDialog } from '@angular/material/dialog';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import { DeleteDialogComponent } from '../shared/delete-dialog/delete-dialog.component';
 import { NoteViewDialog } from '../shared/note-view-dialog/note-view-dialog.component';
