@@ -3,7 +3,6 @@ import { Note } from '../shared/models/Note';
 import { Subscription } from 'rxjs';
 import { NoteService } from '../services/notes/notes.service';
 import { MatDialog } from '@angular/material/dialog';
-import {MatGridListModule} from '@angular/material/grid-list';
 
 import { DeleteDialogComponent } from '../shared/delete-dialog/delete-dialog.component';
 import { NoteViewDialog } from '../shared/note-view-dialog/note-view-dialog.component';
@@ -33,7 +32,7 @@ export class NotesComponent {
       }));
   }
 
-  deleteNote(id: number): void {
+  deleteNote(id: string): void {
     const dialogRef = this.deleteMessage.open(DeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -41,11 +40,11 @@ export class NotesComponent {
     });
   }
 
-  onEditNote(id: number): void {
+  onEditNote(id: string): void {
     this.noteService.startedEditing.next(id);
   }
 
-  onViewNote(id: number, index: number): void {
+  onViewNote(id: string, index: number): void {
     this.editMode = true;
 
     const dialogRef = this.noteViewDialog.open(NoteViewDialog,

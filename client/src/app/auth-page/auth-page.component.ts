@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
-import {
-  MatSnackBar
-} from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
 
-import { AuthResponseData, AuthService } from '../services/auth/auth.service';
-import { Router } from '@angular/router';
+import * as fromApp from '../store/Reducers/app.reducer';
+import * as AuthActions from '../store/Actions/auth.actions';
 
 @Component({
   selector: 'app-auth-page',
@@ -16,8 +15,10 @@ import { Router } from '@angular/router';
 export class AuthPageComponent {
   isLoginMode = true;
   isLoading = false;
-  error: string = '';
+  error: string | null = null;
   hide = true;
+
+  private storeSub: Subscription = new Subscription;
 
   userForm = new FormGroup({
     name: this.isLoginMode ? new FormControl('') : new FormControl('', Validators.required),
@@ -25,14 +26,23 @@ export class AuthPageComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(8)])
   });
 
-  constructor(private authService: AuthService, private router: Router, private topMessage: MatSnackBar) { }
+  constructor(private store: Store<fromApp.AppState>, private topMessage: MatSnackBar) { }
+
+  ngOnInit() {
+    this.storeSub = this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.loading;
+      this.error = authState.authError;
+      if (this.error) {
+        this.openTopMessage();
+      }
+    });
+  }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
   onSubmit() {
-
     if (!this.userForm.valid) {
       return;
     }
@@ -45,36 +55,30 @@ export class AuthPageComponent {
       return;
     }
 
-    this.isLoading = true;
-
-    let authObs: Observable<AuthResponseData>
-
     if (this.isLoginMode) {
-      authObs = this.authService.login(email, password);
+      this.store.dispatch(AuthActions.loginStart({ email, password }));
     } else {
-      authObs = this.authService.signup(name, email, password);
+      this.store.dispatch(AuthActions.signupStart({ name, email, password }));
     }
-
-    authObs.subscribe({
-      next: (v) => {
-        this.isLoading = false;
-        this.router.navigate(['/']);
-      },
-      error: (errorMessage) => {
-        this.isLoading = false;
-        this.error = errorMessage;
-        this.openTopMessage();
-      }
-    });
 
     this.userForm.reset();
   }
 
   openTopMessage() {
-    this.topMessage.open(this.error, 'Hide', {
-      duration: 3 * 1000,
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-    });
+    if (this.error) {
+      this.topMessage.open((this.error), 'Hide', {
+        duration: 3 * 1000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
+
+      this.store.dispatch(AuthActions.clearError());
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.storeSub) {
+      this.storeSub.unsubscribe();
+    }
   }
 }

@@ -1,9 +1,10 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ToDoService } from 'src/app/services/toDo/to-do.service';
-import { ToDo } from 'src/app/shared/models/ToDo';
+import { NgForm } from '@angular/forms';
+import { Store, select } from '@ngrx/store';
 
+import * as ToDoActions from "../../store/Actions/todo.actions"
+import * as fromApp from '../../store/Reducers/app.reducer'
 
 @Component({
   selector: 'app-todo-edit',
@@ -11,51 +12,64 @@ import { ToDo } from 'src/app/shared/models/ToDo';
   styleUrls: ['./todo-edit.component.css']
 })
 export class TodoEditComponent {
-  @ViewChild('f') toDoForm!: NgForm;
   subscription!: Subscription;
-  editMode = false;
-  @Output() blockDelete = new EventEmitter<boolean>();
-  editItemId!: number;
-  editedToDo!: ToDo;
 
-  constructor(private toDoService: ToDoService) { }
+  @ViewChild('f') toDoForm!: NgForm;
+  @Output() blockDelete = new EventEmitter<boolean>();
+
+  editMode = false;
+  editItemId: string | null = null;
+
+  constructor(private store: Store<fromApp.AppState>) { }
 
   onSubmit(form: NgForm) {
     const value = form.value;
 
     if (this.editMode) {
-      this.toDoService.updateToDo(this.editItemId, value.toDo);
-    } else {
-      this.toDoService.addToDo(value.toDo);
-    }
+      this.store.select('todoList').pipe(select('editItemId')).subscribe(
+        (editItemId: string | null) => {
+          this.editItemId = editItemId;
+        }
+      );
 
+      this.store.dispatch(ToDoActions.update({ id: (this.editItemId as string), todo: value.toDo }));
+    } else {
+      this.store.dispatch(ToDoActions.add({ todo: value.toDo }));
+    }
     this.resetForm();
   }
 
   resetForm() {
     this.toDoForm.resetForm();
 
-    const inputElement = document.getElementById('toDo');
-    if (inputElement) {
-      inputElement.blur();
-    }
-
     this.toDoForm.form.markAsPristine();
     this.toDoForm.form.markAsUntouched();
 
     this.editMode = false;
     this.blockDelete.emit(false);
+
+    this.store.dispatch(ToDoActions.stopEdit());
   }
 
   ngOnInit() {
-    this.subscription = this.toDoService.startedEditing.subscribe((id: number) => {
-      this.editItemId = id;
-      this.editMode = true;
-      this.blockDelete.emit(true);
-      this.editedToDo = this.toDoService.getToDo(id);
-      this.toDoForm.setValue({
-        toDo: this.editedToDo.toDo
-      })
+    this.subscription = this.store.select('todoList').subscribe(stateData => {
+      if (stateData.editItemId !== null) {
+        this.editMode = true;
+        this.blockDelete.emit(true);
+
+        this.toDoForm.setValue({
+          toDo: stateData.editedToDo?.toDo
+        })
+
+      } else {
+        this.editMode = false;
+        this.blockDelete.emit(false);
+      }
     })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.store.dispatch(ToDoActions.stopEdit());
   }
 }

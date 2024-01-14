@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthResponseData, AuthService } from './services/auth/auth.service';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Store } from '@ngrx/store';
+
+import * as fromApp from './store/Reducers/app.reducer'
+import { autoLogin, loginStart } from './store/Actions/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -11,29 +12,13 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
-    this.autoLogin();
-  }
-
-  private autoLogin() {
     if (environment.production) {
-      this.authService.autoLogin();
+      this.store.dispatch(autoLogin());
     } else {
-
-      let authObs: Observable<AuthResponseData>;
-
-      authObs = this.authService.login("teste@teste.com", "teste@teste.com");
-
-      authObs.subscribe({
-        next: (v) => {
-          this.router.navigate(['/']);
-        },
-        error: (errorMessage) => {
-          console.log(errorMessage);
-        }
-      });
+      this.store.dispatch(loginStart({ email: "teste@teste.com", password: "teste@teste.com" }));
     }
   }
 }

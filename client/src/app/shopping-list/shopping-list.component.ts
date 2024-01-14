@@ -36,7 +36,7 @@ export class ShoppingListComponent {
     this.subscription.unsubscribe();
   }
 
-  deleteToDo(id: number): void {
+  deleteToDo(id: string): void {
     const dialogRef = this.deleteMessage.open(DeleteDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -44,7 +44,7 @@ export class ShoppingListComponent {
     });
   }
 
-  onEditToDo(id: number): void {
+  onEditToDo(id: string): void {
     this.shoppingListService.startedEditing.next(id);
   }
 

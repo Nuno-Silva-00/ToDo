@@ -4,7 +4,6 @@ import { Subject, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { ShoppingListItem } from 'src/app/shared/models/ShoppingListItem';
-import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +11,14 @@ import { AuthService } from '../auth/auth.service';
 export class ShoppingListService {
 
   shoppingListChanged = new Subject<ShoppingListItem[]>();
-  startedEditing = new Subject<number>();
+  startedEditing = new Subject<string>();
   path = environment.API + '/api/shopping';
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   private shoppingList: ShoppingListItem[] = [];
 
-  getItem(id: number): ShoppingListItem {
+  getItem(id: string): ShoppingListItem {
     return this.shoppingList.filter(item => item.id === id)[0] || null;
   }
 
@@ -47,7 +46,7 @@ export class ShoppingListService {
     );
   }
 
-  deleteItem(id: number): void {
+  deleteItem(id: string): void {
     this.http.delete(this.path + '/delete/' + id).subscribe(
       {
         next: (response) => {
@@ -64,7 +63,7 @@ export class ShoppingListService {
 
   }
 
-  updateItem(id: number, item: string, amount: number,) {
+  updateItem(id: string, item: string, amount: number,) {
     this.http.patch(this.path + '/update', { id, item, amount }).subscribe(
       {
         next: (response) => {

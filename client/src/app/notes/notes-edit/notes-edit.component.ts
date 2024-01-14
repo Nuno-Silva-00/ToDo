@@ -15,7 +15,7 @@ export class NoteEditComponent {
   subscription!: Subscription;
   editMode = false;
   @Output() blockDelete = new EventEmitter<boolean>();
-  editItemId!: number;
+  editItemId!: string;
   editedNote!: Note;
 
   constructor(private noteService: NoteService) { }
@@ -48,7 +48,7 @@ export class NoteEditComponent {
   }
 
   ngOnInit() {
-    this.subscription = this.noteService.startedEditing.subscribe((id: number) => {
+    this.subscription = this.noteService.startedEditing.subscribe((id: string) => {
       this.editItemId = id;
       this.editMode = true;
       this.blockDelete.emit(true);

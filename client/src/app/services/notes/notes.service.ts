@@ -2,7 +2,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, tap } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
 
 import { environment } from 'src/environments/environment';
 import { Note } from 'src/app/shared/models/Note';
@@ -13,14 +12,14 @@ import { Note } from 'src/app/shared/models/Note';
 export class NoteService {
 
   notesChanged = new Subject<Note[]>();
-  startedEditing = new Subject<number>();
+  startedEditing = new Subject<string>();
   path = environment.API + '/api/note';
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   private notes: Note[] = [];
 
-  getNote(id: number): Note {
+  getNote(id: string): Note {
     return this.notes.filter(item => item.id === id)[0] || null;
   }
 
@@ -47,7 +46,7 @@ export class NoteService {
     );
   }
 
-  deleteNote(id: number): void {
+  deleteNote(id: string): void {
     this.http.delete(this.path + '/delete/' + id).subscribe(
       {
         next: (response) => {
@@ -65,7 +64,7 @@ export class NoteService {
 
   }
 
-  updateNote(id: number, newNote: string) {
+  updateNote(id: string, newNote: string) {
     this.http.patch(this.path + '/update', { id: id, note: newNote }).subscribe(
       {
         next: (response) => {

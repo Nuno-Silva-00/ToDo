@@ -12,7 +12,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatGridListModule} from '@angular/material/grid-list'; 
+import { MatGridListModule } from '@angular/material/grid-list';
+import { StoreModule } from '@ngrx/store';
+import { AsyncPipe } from '@angular/common';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
 import { ToDoComponent } from './todo/todo.component';
@@ -27,6 +30,9 @@ import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/sh
 import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.component';
 import { NoteEditComponent } from './notes/notes-edit/notes-edit.component';
 import { NoteViewDialog } from './shared/note-view-dialog/note-view-dialog.component';
+import { AuthEffects } from './store/Effects/auth.effects';
+import { TodoEffects } from './store/Effects/todo.effects';
+import * as fromApp from './store/Reducers/app.reducer'
 
 @NgModule({
   declarations: [
@@ -58,8 +64,10 @@ import { NoteViewDialog } from './shared/note-view-dialog/note-view-dialog.compo
     ReactiveFormsModule,
     DragDropModule,
     MatDialogModule,
-    MatGridListModule
-
+    MatGridListModule,
+    AsyncPipe,
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([AuthEffects, TodoEffects])
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

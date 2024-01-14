@@ -13,7 +13,7 @@ export class ShoppingListEditComponent {
   subscription!: Subscription;
   editMode = false;
   @Output() blockDelete = new EventEmitter<boolean>();
-  editItemId!: number;
+  editItemId!: string;
   editedItem!: ShoppingListItem;
 
   shoppingListForm = new FormGroup({
@@ -52,8 +52,7 @@ export class ShoppingListEditComponent {
   }
 
   ngOnInit() {
-    this.subscription = this.shoppingListService.startedEditing.subscribe((id: number) => {
-
+    this.subscription = this.shoppingListService.startedEditing.subscribe((id: string) => {
       this.editItemId = id;
       this.editMode = true;
       this.blockDelete.emit(true);

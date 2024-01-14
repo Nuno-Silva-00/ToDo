@@ -1,3 +1,3 @@
 export class ShoppingListItem {
-    constructor(public id: number, public item: string, public amount: number) { }
+    constructor(public id: string, public item: string, public amount: number) { }
 }

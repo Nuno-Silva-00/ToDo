@@ -1,3 +1,3 @@
 export class Note {
-    constructor(public id: number, public note: string) { }
+    constructor(public id: string, public note: string) { }
 }
