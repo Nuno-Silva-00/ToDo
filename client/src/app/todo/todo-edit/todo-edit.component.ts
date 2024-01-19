@@ -32,9 +32,11 @@ export class TodoEditComponent {
         }
       );
 
-      this.store.dispatch(ToDoActions.update({ id: (this.editItemId as string), todo: value.toDo }));
+      if (this.editItemId) {
+        this.store.dispatch(ToDoActions.update({ id: this.editItemId, todo: value.toDo.trim() }));
+      }
     } else {
-      this.store.dispatch(ToDoActions.add({ todo: value.toDo }));
+      this.store.dispatch(ToDoActions.add({ todo: value.toDo.trim() }));
     }
     this.resetForm();
   }

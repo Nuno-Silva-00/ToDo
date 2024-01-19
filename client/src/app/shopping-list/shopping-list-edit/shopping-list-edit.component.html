@@ -15,7 +15,9 @@
             <button matSuffix mat-button [hidden]="editMode ? false : true" type="button"
                 (click)="resetForm()">Clear</button>
 
-            <button matSuffix mat-button [disabled]="!shoppingListForm.get('item')!.value" type="submit">
+            <button matSuffix mat-button
+                [disabled]="(!shoppingListForm.get('item')!.value ) ? true : !shoppingListForm.get('item')!.value.trim()"
+                type="submit">
                 {{editMode ? 'Edit' : 'Add'}}
             </button>
         </div>
