@@ -29,9 +29,9 @@ export class ShoppingListEditComponent {
 
     if (this.editMode) {
       if (this.editItemId)
-        this.shoppingListService.updateItem(this.editItemId, item.trim(), amount);
+        this.shoppingListService.updateItem(this.editItemId, item.trim(), amount < 0 ? 0 : amount);
     } else {
-      this.shoppingListService.addItem(item.trim(), amount);
+      this.shoppingListService.addItem(item.trim(), amount < 0 ? 0 : amount);
     }
 
     this.resetForm();
