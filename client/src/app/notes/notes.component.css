@@ -11,7 +11,8 @@
 
 .card span {
     display: block;
-    overflow: scroll;
+    overflow-x: clip;
+    overflow-y: scroll;
     white-space: pre-wrap;
 
     min-height: 10em;

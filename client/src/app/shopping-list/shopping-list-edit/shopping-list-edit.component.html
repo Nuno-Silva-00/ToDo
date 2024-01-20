@@ -13,8 +13,7 @@
 
         <div class="submitButtons">
             <button matSuffix mat-button [hidden]="editMode ? false : true" type="button"
-                (click)="resetForm()">Clear</button>
-
+                (click)="resetForm()">Cancel</button>
             <button matSuffix mat-button
                 [disabled]="(!shoppingListForm.get('item')!.value ) ? true : !shoppingListForm.get('item')!.value.trim()"
                 type="submit">

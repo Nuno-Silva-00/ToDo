@@ -4,7 +4,7 @@
         <mat-label>Add To Do</mat-label>
         <input type="text" id="toDo" name='toDo' matInput class="form-control" ngModel>
         <button matSuffix mat-button [hidden]="editMode ? false : true" type="button"
-            (click)="resetForm()">Clear</button>
+            (click)="resetForm()">Cancel</button>
         <button matSuffix mat-button [disabled]="!f.value.toDo ? true : !f.value.toDo.trim()" type="submit">
             {{editMode ? 'Edit' : 'Add'}}
         </button>
