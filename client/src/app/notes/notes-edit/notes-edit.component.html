@@ -5,7 +5,7 @@
             <textarea rows="6" cols="50" type="text" id="note" name='note' matInput class="form-control"
                 ngModel></textarea>
             <button matSuffix mat-button [hidden]="editMode ? false : true" type="button"
-                (click)="resetForm()">Clear</button>
+                (click)="resetForm()">Cancel</button>
             <button matSuffix mat-button [disabled]="!f.value.note ? true : !f.value.note.trim()" type="submit">
                 {{editMode ? 'Edit' : 'Add'}}
             </button>
