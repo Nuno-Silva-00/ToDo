@@ -1,0 +1,9 @@
+.delete {
+    color: #af1313;
+}
+
+.delete:hover {
+    background-color: #e72929;
+    color: white;
+    opacity: .9;
+}

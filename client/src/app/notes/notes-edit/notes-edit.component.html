@@ -1,15 +1,14 @@
 <div class="container">
     <form #f="ngForm" (ngSubmit)="onSubmit(f)">
-        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form-group" >
+        <mat-form-field subscriptSizing="dynamic" appearance="outline" class="form-group">
             <mat-label>Add Note</mat-label>
             <textarea rows="6" cols="50" type="text" id="note" name='note' matInput class="form-control"
                 ngModel></textarea>
             <button matSuffix mat-button [hidden]="editMode ? false : true" type="button"
                 (click)="resetForm()">Clear</button>
-            <button matSuffix mat-button [disabled]="!f.value.note" type="submit">
+            <button matSuffix mat-button [disabled]="!f.value.note ? true : !f.value.note.trim()" type="submit">
                 {{editMode ? 'Edit' : 'Add'}}
             </button>
         </mat-form-field>
     </form>
-
 </div>

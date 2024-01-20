@@ -15,7 +15,7 @@ export class NoteEditComponent {
   subscription!: Subscription;
   editMode = false;
   @Output() blockDelete = new EventEmitter<boolean>();
-  editItemId!: string;
+  editItemId: string | null = null;
   editedNote!: Note;
 
   constructor(private noteService: NoteService) { }
@@ -24,9 +24,10 @@ export class NoteEditComponent {
     const value = form.value;
 
     if (this.editMode) {
-      this.noteService.updateNote(this.editItemId, value.note);
+      if (this.editItemId)
+        this.noteService.updateNote(this.editItemId, value.note.trim());
     } else {
-      this.noteService.addNote(value.note);
+      this.noteService.addNote(value.note.trim());
     }
 
     this.resetForm();

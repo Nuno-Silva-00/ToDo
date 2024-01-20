@@ -13,32 +13,25 @@ export class ShoppingListEditComponent {
   subscription!: Subscription;
   editMode = false;
   @Output() blockDelete = new EventEmitter<boolean>();
-  editItemId!: string;
+  editItemId: string | null = null;
   editedItem!: ShoppingListItem;
 
   shoppingListForm = new FormGroup({
     item: new FormControl(),
-    amount: new FormControl()
+    amount: new FormControl(),
   });
 
   constructor(private shoppingListService: ShoppingListService) { }
 
   onSubmit() {
-    const item = this.shoppingListForm.get('item')!.value;
-    let amount = this.shoppingListForm.get('amount')!.value;
-
-    if (item === null) {
-      return;
-    }
-
-    if (amount === null) {
-      amount = '0';
-    }
+    const item: string = this.shoppingListForm.get('item')!.value;
+    const amount: number = this.shoppingListForm.get('amount')!.value;
 
     if (this.editMode) {
-      this.shoppingListService.updateItem(this.editItemId, item, +amount);
+      if (this.editItemId)
+        this.shoppingListService.updateItem(this.editItemId, item.trim(), amount);
     } else {
-      this.shoppingListService.addItem(item, +amount);
+      this.shoppingListService.addItem(item.trim(), amount);
     }
 
     this.resetForm();
@@ -60,7 +53,7 @@ export class ShoppingListEditComponent {
 
       this.shoppingListForm.setValue({
         item: this.editedItem.item,
-        amount: this.editedItem.amount.toString()
+        amount: this.editedItem.amount
       });
     });
   }
