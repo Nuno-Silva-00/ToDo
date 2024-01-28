@@ -14,40 +14,29 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { StoreModule } from '@ngrx/store';
-import { AsyncPipe } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
-import { ToDoComponent } from './todo/todo.component';
 import { HeaderComponent } from './header/header.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { NotesComponent } from './notes/notes.component';
-import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
 import { AuthPageComponent } from './auth-page/auth-page.component';
-import { LoadingSpinerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
-import { ShoppingListEditComponent } from './shopping-list/shopping-list-edit/shopping-list-edit.component';
-import { DeleteDialogComponent } from './shared/delete-dialog/delete-dialog.component';
 import { NoteEditComponent } from './notes/notes-edit/notes-edit.component';
-import { NoteViewDialog } from './shared/note-view-dialog/note-view-dialog.component';
 import { AuthEffects } from './store/Effects/auth.effects';
 import { TodoEffects } from './store/Effects/todo.effects';
-import * as fromApp from './store/Reducers/app.reducer'
 
+import * as fromApp from './store/Reducers/app.reducer';
+
+import { TodoModule } from './todo/todo.module';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
-    ToDoComponent,
     HeaderComponent,
-    ShoppingListComponent,
     NotesComponent,
-    TodoEditComponent,
-    AuthPageComponent,
-    LoadingSpinerComponent,
-    ShoppingListEditComponent,
-    DeleteDialogComponent,
     NoteEditComponent,
-    NoteViewDialog
+    AuthPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +45,6 @@ import * as fromApp from './store/Reducers/app.reducer'
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
-    MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     HttpClientModule,
@@ -65,9 +53,11 @@ import * as fromApp from './store/Reducers/app.reducer'
     DragDropModule,
     MatDialogModule,
     MatGridListModule,
-    AsyncPipe,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects, TodoEffects])
+    EffectsModule.forRoot([AuthEffects, TodoEffects]),
+    TodoModule,
+    ShoppingListModule,
+    SharedModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

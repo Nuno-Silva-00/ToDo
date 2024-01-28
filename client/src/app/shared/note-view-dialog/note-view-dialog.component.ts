@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 interface DialogData {
   note: string
@@ -11,10 +11,10 @@ interface DialogData {
   templateUrl: './note-view-dialog.component.html',
   styleUrls: ['./note-view-dialog.component.css']
 })
-export class NoteViewDialog {
+export class NoteViewDialogComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<NoteViewDialog>,
+    public dialogRef: MatDialogRef<NoteViewDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) { }
 
