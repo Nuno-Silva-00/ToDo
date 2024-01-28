@@ -5,7 +5,7 @@ import { NoteService } from '../services/notes/notes.service';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DeleteDialogComponent } from '../shared/delete-dialog/delete-dialog.component';
-import { NoteViewDialog } from '../shared/note-view-dialog/note-view-dialog.component';
+import { NoteViewDialogComponent} from '../shared/note-view-dialog/note-view-dialog.component';
 
 @Component({
   selector: 'app-notes',
@@ -47,7 +47,7 @@ export class NotesComponent {
   onViewNote(id: string, index: number): void {
     this.editMode = true;
 
-    const dialogRef = this.noteViewDialog.open(NoteViewDialog,
+    const dialogRef = this.noteViewDialog.open(NoteViewDialogComponent,
       {
         data: this.notes[index].note,
       });
