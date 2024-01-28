@@ -13,10 +13,10 @@ import { TodoEffects } from './store/Effects/todo.effects';
 import * as fromApp from './store/Reducers/app.reducer';
 
 import { TodoModule } from './todo/todo.module';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
-import { NoteModule } from './notes/notes.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth-page/auth-page.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,15 +24,15 @@ import { AuthModule } from './auth-page/auth-page.module';
     HeaderComponent,
   ],
   imports: [
+    SharedModule,
+    TodoModule,
+    AuthModule,
+    BrowserAnimationsModule,
+    BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects, TodoEffects]),
-    TodoModule,
-    ShoppingListModule,
-    NoteModule,
-    SharedModule,
-    AuthModule
+    EffectsModule.forRoot([AuthEffects, TodoEffects])
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

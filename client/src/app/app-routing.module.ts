@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ToDoComponent } from './todo/todo.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { NotesComponent } from './notes/notes.component';
 import { AuthPageComponent } from './auth-page/auth-page.component';
 import { canActivate } from './auth-page/auth.guard';
 
@@ -15,12 +13,12 @@ const routes: Routes = [
   },
   {
     path: 'shopping-list',
-    component: ShoppingListComponent,
+    loadChildren: () => import('./shopping-list/shopping-list.module').then(m => m.ShoppingListModule),
     canActivate: [canActivate]
   },
   {
     path: 'notes',
-    component: NotesComponent,
+    loadChildren: () => import('./notes/notes.module').then(m => m.NoteModule),
     canActivate: [canActivate]
   },
   {

@@ -6,6 +6,7 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { MatInputModule } from "@angular/material/input";
 import { SharedModule } from "../shared/shared.module";
 import { MatButtonModule } from "@angular/material/button";
+import { NotesRoutingModule } from "./notes-routing.module";
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { MatButtonModule } from "@angular/material/button";
         MatButtonModule,
         MatCardModule,
         MatInputModule,
-        MatGridListModule
+        MatGridListModule,
+        NotesRoutingModule
     ]
 })
 export class NoteModule { }

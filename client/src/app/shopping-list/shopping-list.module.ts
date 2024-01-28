@@ -5,9 +5,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SharedModule } from "../shared/shared.module";
-
+import { ShoppingListRoutingModule } from "./shopping-list-routing.module";
 @NgModule({
     declarations: [
         ShoppingListComponent,
@@ -15,11 +14,11 @@ import { SharedModule } from "../shared/shared.module";
     ],
     imports: [
         SharedModule,
-        BrowserAnimationsModule,
         MatCardModule,
         MatButtonModule,
         MatInputModule,
         ReactiveFormsModule,
+        ShoppingListRoutingModule
     ]
 })
 export class ShoppingListModule { }
