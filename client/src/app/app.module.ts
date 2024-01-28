@@ -12,7 +12,6 @@ import { TodoEffects } from './store/Effects/todo.effects';
 
 import * as fromApp from './store/Reducers/app.reducer';
 
-import { TodoModule } from './todo/todo.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth-page/auth-page.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,7 +24,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     SharedModule,
-    TodoModule,
     AuthModule,
     BrowserAnimationsModule,
     BrowserModule,

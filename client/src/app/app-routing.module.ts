@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-import { ToDoComponent } from './todo/todo.component';
-import { AuthPageComponent } from './auth-page/auth-page.component';
 import { canActivate } from './auth-page/auth.guard';
+import { AuthPageComponent } from './auth-page/auth-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ToDoComponent,
+    loadChildren: () => import('./todo/todo.module').then(m => m.TodoModule),
     canActivate: [canActivate]
   },
   {
@@ -28,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

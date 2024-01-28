@@ -6,6 +6,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
 import { SharedModule } from "../shared/shared.module";
+import { ToDoRoutingModule } from "./todo-routing.module";
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { SharedModule } from "../shared/shared.module";
         MatCardModule,
         MatButtonModule,
         MatInputModule,
-        DragDropModule
+        DragDropModule,
+        ToDoRoutingModule
     ]
 })
 export class TodoModule { }
